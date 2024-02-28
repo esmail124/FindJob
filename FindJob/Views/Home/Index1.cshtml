@@ -1,0 +1,75 @@
+﻿@using FindJob.Data.Entities
+@model IEnumerable<JobDTO>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- جستجو -->
+                <form asp-action="Search" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search for jobs..." name="query">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 text-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-success">Login</a>
+                }
+            </div>
+        </div>
+    </div>
+</header>
+<body>
+    <div id="map"></div>
+</body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Latest Jobs</h2>
+            <ul>
+                @foreach (var job in Model)
+                {
+                    <li>
+                        <a asp-action="Details" asp-route-id="@job.Id">@job.JobTitle</a>
+                        - @job.CompanyName
+                    </li>
+                }
+            </ul>
+        </div>
+
+    </div>
+</div>
+<script>
+    
+    var myMap = new L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(myMap);
+</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<style>
+    #map {
+        height: 180px;
+    }
+</style>

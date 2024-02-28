@@ -1,0 +1,17 @@
+﻿@*@using TripPJ.UI.Dtos.Admin
+@model TripPJ.Model.Models.ApplicationRole
+
+<h3>Edit Role</h3>
+<form method="post" href="~/Admin/EditRole">
+    <div asp-validation-summary="All">
+        <input type="hidden" asp-for="@Model.RoleId" />
+    </div>
+    <div>
+        <label asp-for="Name"></label>
+        <input type="text" asp-for="@Model.RoleName" class="form-control" />
+    </div>
+    <div>
+        <button href="~/Admin/Index" type="submit" class="btn btn-success">Update</button>
+        <a href="~/Admin/Index" class="btn btn-secondary">Return</a>
+    </div>
+</form>*@

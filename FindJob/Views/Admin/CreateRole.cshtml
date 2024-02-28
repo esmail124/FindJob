@@ -1,0 +1,16 @@
+﻿@model AdminViewModel
+
+<h3>Create Role</h3>
+<form method="post" asp-controller="Admin" asp-action="CreateRole" asp-route-id="@Model.Id">
+    <div asp-validation-summary="All">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div>
+        <label asp-for="Name"></label>
+        <input type="text" asp-for="RoleName" class="form-control" />
+    </div>
+    <div>
+        <button href="~/Admin/Index" type="submit" class="btn btn-success">Create</button>
+        <a href="~/Admin/Index" class="btn btn-secondary">Return</a>
+    </div>
+</form>

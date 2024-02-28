@@ -1,0 +1,43 @@
+﻿@model List<AdminRoleViewModel>
+
+<h1>Roles and Associated Permissions (Admin View)</h1>
+<form method="post" asp-action="Index">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Role Name</th>
+                <th>Associated Permissions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" name="viewModelList[@i].RoleId" value="@Model[i].RoleId" />
+                        <input type="hidden" name="viewModelList[@i].RoleName" value="@Model[i].RoleName" />
+                        @Model[i].RoleName
+                    </td>
+                    <td>
+                        @for (int j = 0; j < Model[i].Permissions.Count; j++)
+                        {
+                            <div>
+                                <input type="hidden" name="viewModelList[@i].Permissions[@j].PermissionId" value="@Model[i].Permissions[j].PermissionId" />
+                                <input type="hidden" name="viewModelList[@i].Permissions[@j].Title" value="@Model[i].Permissions[j].Title" />
+                                <input type="checkbox" id="@($"chk_{Model[i].RoleId}_{Model[i].Permissions[j].PermissionId}")"
+                                       name="viewModelList[@i].Permissions[@j].IsSelected"
+                                       value="true" @(Model[i].Permissions[j].IsSelected ? "checked" : "") />
+                                <label for="@($"chk_{Model[i].RoleId}_{Model[i].Permissions[j].PermissionId}")">@Model[i].Permissions[j].Title</label>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>

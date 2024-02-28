@@ -1,0 +1,27 @@
+﻿@using FindJob.Models;
+<!-- Views/Permission/Delete.cshtml -->
+@model PermissionViewModel
+
+<h1>Delete Permission</h1>
+
+<p>Are you sure you want to delete this permission?</p>
+
+<form asp-controller="Permission" asp-action="Delete" method="post" asp-route-id="@Model.Id">
+    <div asp-validation-summary="ModelOnly">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Title" class="form-group"></label>
+        <span class="form-control">@Model.Title</span>
+    </div>
+    <div class="form-group">
+        <label class="form-group" asp-for="ClientAddress"></label>
+        <span class="form-control">@Model.ClientAddress</span>
+    </div>
+
+    <!-- Add more display fields as needed -->
+
+    <div>
+        <button type="submit" class="btn btn-outline-danger">Confirm Delete</button>
+    </div>
+</form>

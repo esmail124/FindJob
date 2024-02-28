@@ -1,0 +1,100 @@
+﻿@model JobDTO
+
+<h2>Create Job</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle" class="form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CompanyName"></label>
+        <input asp-for="CompanyName" class="form-control" />
+        <span asp-validation-for="CompanyName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CompanyPhoneNumber"></label>
+        <input asp-for="CompanyPhoneNumber" class="form-control" />
+        <span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Latitude">Latitude</label>
+        <input asp-for="Latitude" class="form-control" />
+        <span asp-validation-for="Latitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Longitude">Longitude</label>
+        <input asp-for="Longitude" class="form-control" />
+        <span asp-validation-for="Longitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<body>
+    <div id="map"></div>
+</body>
+
+
+
+<script>
+    var myMap = new L.map('map').setView([32.6546, 51.6676], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(myMap);
+
+    // افزودن مارکرهای قبلی به نقشه در صورت ویرایش
+    // foreach (var job in Model.ExistingMarkers)
+    // {
+    //     <text>
+    //             var existingMarker = L.marker([job.Latitude, job.Longitude]).addTo(myMap);
+    //     existingMarker.bindPopup("<b>مارکر قبلی</b><br/>متن پاپ‌آپ");
+    //     </text>
+    // }
+
+        myMap.on('click', function (e) {
+            var clickedMarker = L.marker(e.latlng).addTo(myMap);
+            clickedMarker.bindPopup("<b>مارکر کلیک شده</b><br/>متن پاپ‌آپ");
+
+            // افزودن مختصات به فیلدهای مختصات فرم
+            document.getElementById("Latitude").value = e.latlng.lat;
+            document.getElementById("Longitude").value = e.latlng.lng;
+        });
+</script>
+
+<!-- اضافه کردن فایلهای CSS و JavaScript از NuGet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<style>
+    #map {
+        height: 180px;
+    }
+</style>
+
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,71 @@
+﻿@using FindJob.Models;
+<!-- Views/Permission/Update.cshtml -->
+@model PermissionViewModel
+
+<h1>Edit Permission</h1>
+
+<form asp-controller="Permission" asp-action="Update" method="post" asp-route-id="@Model.Id" onsubmit="console.log('Form submitted');">
+    <div asp-validation-summary="ModelOnly">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div>
+        <label asp-for="Title" class="form-group"></label>
+        <input asp-for="Title" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="ClientAddress" class="form-group"></label>
+        <input asp-for="ClientAddress" class="form-control"/>
+    </div>
+    <div>
+        <div id="urlsSection">
+            <label>Urls</label>
+            @foreach (var url in Model.Urls)
+            {
+                <div class="url-input">
+                    <input asp-for="Urls" class="form-control" placeholder="like : Home/Index" value="@url" />
+                    <button type="submit" class="remove-url btn btn-close"></button>
+                </div>
+            }
+            <button id="addUrlButton" class="btn btn-outline-success" type="button">Add URL</button>    
+        </div>
+    </div>
+    <div>
+        <button asp-action="Index" type="submit" class="btn btn-primary">Update</button>
+        <a asp-controller="Permission" asp-action="Index" class="btn btn-secondary">Return</a>
+    </div>
+</form>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to add a new URL input field
+            function addUrlInput() {
+                var urlsSection = document.getElementById('urlsSection');
+                var urlInput = document.createElement('div');
+                urlInput.classList.add('url-input');
+                urlInput.innerHTML = `
+                            <input asp-for="Urls" class="form-control" placeholder="like : Home/Index" />
+                            <button type="submit" class="remove-url btn btn-close"></button>
+                        `;
+                urlsSection.appendChild(urlInput);
+            }
+
+            // Function to remove a URL input field
+            function removeUrlInput(event) {
+                var urlInput = event.target.closest('.url-input');
+                if (urlInput) {
+                    urlInput.remove();
+                }
+            }
+
+            // Add event listener for the "Add URL" button
+            document.getElementById('addUrlButton').addEventListener('click', addUrlInput);
+
+            // Add event listener for dynamically created "Remove" buttons
+            document.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-url')) {
+                    removeUrlInput(event);
+                }
+            });
+        });
+    </script>
+}

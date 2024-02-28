@@ -1,0 +1,36 @@
+﻿@using FindJob.Models;
+@model List<PermissionViewModel>
+
+<h1>Permission List</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Client Address</th>
+        <th>Urls</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var permission in Model)
+    {
+        <tr>
+            <td>@permission.Id</td>
+            <td>@permission.Title</td>
+                <td>@permission.ClientAddress</td>
+                <td>@permission.Urls</td>
+            @* <td>@string.Join(", ", permission.Urls.Select(url => url.ToLower()))</td> *@
+            <td>
+                <div>
+                    <a href="~/Permission/Update?id=@permission.Id" class="btn btn-secondary">Update</a>
+                    <a href="~/Permission/Delete?id=@permission.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a class="btn btn-success" asp-controller="Permission" asp-action="Create">Create</a>

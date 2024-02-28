@@ -1,0 +1,29 @@
+﻿@*@using TripPJ.UI.Controllers;
+@model AdminController
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Company Name</td>
+        <td>Is Active?</td>
+        <td>Action</td>
+    </tr>
+    @if (Model.Users != null)
+    {
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.CompanyName</td>
+                <td>@item.IsActive</td>
+                <td>@item.Id</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <caption>null reference</caption>
+    }
+
+</table>*@
